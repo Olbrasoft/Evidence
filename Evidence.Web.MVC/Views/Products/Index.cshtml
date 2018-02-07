@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Evidence.DTO.ProductView>
+@{
+    ViewBag.Title = "Produkty";
+}
+
+<h2>Produkty</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<!-- DataTables -->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> Tabulka produktů
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Název</th>
+                        <th>Autor/Výrobce</th>
+                        <th>Kategorie</th>
+                        <th>Akce</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Název</th>
+                        <th>Autor/Výrobce</th>
+                        <th>Kategorie</th>
+                        <th>Akce</th>
+                    </tr>
+                </tfoot>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Author)
+                        </td>
+                        <td>
+                            @item.CategoryName
+                        </td>
+                        <td>
+                            @Html.ActionLink("Upravit", "Edit", new { id = item.Id }) |
+                          
+                            @Html.ActionLink("Smazat", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            @if (ViewBag.Pages != null)
+            {
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        @for (var i = 1; i <= ViewBag.Pages; i++)
+                        {
+                            <li class="page-item">
+                                @Html.ActionLink(i.ToString(), "Index", new { page = i }, new { @class = "page-link" })
+                            </li>
+
+                        }
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+    <div class="card-footer small text-muted">TODO LAstUpdate Updated yesterday at 11:59 PM</div>
+</div>
